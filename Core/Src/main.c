@@ -77,8 +77,70 @@ HAL_UART_Transmit(&huart1 , (uint8_t *)&ch, 1, 0xFFFF);
 return ch;
 }
 
-
+int16_t com1 = 60, com2 = 90;
+int16_t err1, err2;
 char *token;
+
+
+float err_x = 0.0;//x误差
+float err_y = 0.0;//y误差
+float integral_x = 0.0;//x积分
+float integral_y = 0.0;//y积分
+float err_last_x = 0.0;//x上一误差值
+float err_last_y = 0.0;//y上一误差值
+float actual_value = 0.0;//驱动值
+float PID_x(float target_value, float temp_val)
+{
+        /*位置式PID*/
+        /*误差 = 目标值 - 输入的实际值*/
+        err_x = target_value - temp_val;
+
+        /*误差累计*/
+        integral_x += err_x;
+
+
+        /*积分限幅*/
+        if(integral_x > 3000)
+                integral_x = 3000;
+        else if(integral_x < -3000)
+                integral_x = -3000;
+
+        /*PID算法实现*/
+        actual_value = 0.05*err_x + 0.01*integral_x + 0.01*(err_x - err_last_x);
+
+        /*记录上一误差值*/
+        err_last_x = err_x;
+
+
+        /*返回当前实际值*/
+        return actual_value;
+}
+float PID_y(float target_value, float temp_val)
+{
+        /*位置式PID*/
+        /*误差 = 目标值 - 输入的实际值*/
+        err_y = target_value - temp_val;
+
+        /*误差累计*/
+        integral_y += err_y;
+
+
+        /*积分限幅*/
+        if(integral_y > 3000)
+                integral_y = 3000;
+        else if(integral_y < -3000)
+                integral_y = -3000;
+
+        /*PID算法实现*/
+        actual_value = 0.05*err_y + 0.01*integral_y + 0.01*(err_y - err_last_y);
+
+        /*记录上一误差值*/
+        err_last_y = err_y;
+
+
+        /*返回当前实际值*/
+        return actual_value;
+}
 /* USER CODE END 0 */
 
 /**
@@ -127,45 +189,68 @@ int main(void)
 //	  control_Send(CMD_ANGLE_CONTROL1,1,ang);
 //	  control_Send(CMD_ANGLE_CONTROL1,2,1);/*用于测试*/
 	  if(re){
-		    // 假设 RS485_buff 中已经存储了接收到的数据，如 "10,5"
-//		  int comma_found = 0;
+// 假设 RS485_buff 中已经存储了接收到的数据，如 "10,5"
+		  int comma_found = 0;
 		  int16_t value1 = 0, value2 = 0;
-//	        for (int i = 0; i < size - 2; i++) {
-//	            if (RS485_buff[i] >= '0' && RS485_buff[i] <= '9') {
-//	                if (!comma_found) {
-//	                    value1 = value1 * 10 + (RS485_buff[i] - '0');
-//	                } else {
-//	                    value2 = value2 * 10 + (RS485_buff[i] - '0');
-//	                }
-//	            } else if (RS485_buff[i] == ',') {
-//	                comma_found = 1;
-//	            }
-//	        }
-//		  printf("value1: %hd, value2: %hd\n", value1, value2);
+	        for (int i = 0; i < size - 2; i++) {
+	            if (RS485_buff[i] >= '0' && RS485_buff[i] <= '9') {
+	                if (!comma_found) {
+	                    value1 = value1 * 10 + (RS485_buff[i] - '0');
+	                } else {
+	                    value2 = value2 * 10 + (RS485_buff[i] - '0');
+	                }
+	            } else if (RS485_buff[i] == ',') {
+	                comma_found = 1;
+	            }
+	        }
 
-	        // 假设 RS485_buff 中已经存储了接收到的数据，如 "-10,5"
-	        char *token;
-	        int16_t x = 0, y = 0, z = 0;
-	        token = strtok((char *)RS485_buff, ",");
-	        x = (int16_t)strtol(token, NULL, 10);
-	        token = strtok(NULL, ",");
-	        y = (int16_t)strtol(token, NULL, 10);
-	        token = strtok(NULL, ",");
-	        z = (int16_t)strtol(token, NULL, 10);
+// 假设 RS485_buff 中已经存储了接收到的数据，如 "-10,5,45"
+//	        char *token;
+//	        int16_t x = 0, y = 0, z = 0;
+//	        token = strtok((char *)RS485_buff, ",");
+//	        x = (int16_t)strtol(token, NULL, 10);
+//	        token = strtok(NULL, ",");
+//	        y = (int16_t)strtol(token, NULL, 10);
+//	        token = strtok(NULL, ",");
+//	        z = (int16_t)strtol(token, NULL, 10);
+//
+//	        printf("value1: %hd, value2: %hd, value3: %hd\n", x, y, z);
+//	        double theta = atan2(y, x);
+//	        double degrees = theta * 180 / M_PI;
+////	        double d = sqrt(x*x + y*y);
+////	        double the = atan2(z, d);
+////	        double deg = the * 180 / M_PI;
+//				value1 = (z+20) * 100;
+//				value2 = (degrees) * 100;
 
-	        printf("value1: %hd, value2: %hd, value3: %hd\n", x, y, z);
-	        double theta = atan2(y, x);
-	        double degrees = theta * 180 / M_PI;
+		// value1 = (value1) * 100;
+		// value2 = (value2) * 100;
 
-//	        double d = sqrt(x*x + y*y);
-//	        double the = atan2(z, d);
-//	        double deg = the * 180 / M_PI;
+	    /*PID*/
+		err1 = PID_x(value1 ,240);
+		err2 = PID_y(value2 ,320);
+		com1 = com1 - err1;
+		com2 = com2 - err2;
+	    // 将d限制在0 - 180之间
+	    if (com1 < 40) {
+	    	com1 = 40;
+	    } else if (com1 > 100) {
+	    	com1 = 100;
+	    }
 
-
-				value1 = (z+20) * 100;
-				value2 = (degrees) * 100;
+	    // 将b限制在0 - 180之间
+	    if (com2 < 35) {
+	    	com2 = 35;
+	    } else if (com2 > 145) {
+	    	com2 = 145;
+	    }
+		printf("fuyang: %hd, pianhang: %hd\n", com1, com2);
+		  /*控制指令*/
+		value1 = (com1) * 100;
+		value2 = (com2) * 100;
+		/*PID*/
 		control_Send(CMD_ANGLE_CONTROL1, 1, value1);
-		HAL_Delay(50);
+		HAL_Delay(1);
 		control_Send(CMD_ANGLE_CONTROL1, 2, value2);
 		re=0;
 	  }
