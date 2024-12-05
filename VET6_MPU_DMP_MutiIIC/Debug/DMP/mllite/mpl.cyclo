@@ -1,0 +1,4 @@
+D:/STM32CubeIDESTM32CubeIDEworkspace_1.16.1/MPU/DMP/driver/include/log.h:339:20:__print_result_location.constprop	1
+../DMP/mllite/mpl.c:29:13:inv_init_mpl	4
+../DMP/mllite/mpl.c:51:13:inv_get_version	1
+../DMP/mllite/mpl.c:64:13:inv_start_mpl	2

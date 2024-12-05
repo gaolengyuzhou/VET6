@@ -1,0 +1,8 @@
+../icode/mpu6050.c:19:4:MPU_Set_Gyro_Fsr	1
+../icode/mpu6050.c:24:4:MPU_Set_Accel_Fsr	1
+../icode/mpu6050.c:29:4:MPU_Set_LPF	5
+../icode/mpu6050.c:41:4:MPU_Set_Rate	1
+../icode/mpu6050.c:51:9:MPU6050_Init	2
+../icode/mpu6050.c:128:5:MPU6050_DMP_init	10
+../icode/mpu6050.c:158:6:MPU6050_DMP_InitFunc	3
+../icode/mpu6050.c:192:4:MPU6050_DMP_Get_Date	3

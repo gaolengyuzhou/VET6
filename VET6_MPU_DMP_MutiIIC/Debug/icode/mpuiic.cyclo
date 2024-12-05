@@ -1,0 +1,7 @@
+../icode/mpuiic.c:10:8:stm32_i2c1_write	2
+../icode/mpuiic.c:17:8:stm32_i2c1_read	1
+../icode/mpuiic.c:23:4:MPU_Write_Len	1
+../icode/mpuiic.c:28:4:MPU_Read_Len	1
+../icode/mpuiic.c:33:4:MPU_Write_Byte	1
+../icode/mpuiic.c:37:4:MPU_Read_Byte	1
+../icode/mpuiic.c:42:6:mget_ms	1
