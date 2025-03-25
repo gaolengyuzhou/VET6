@@ -1,5 +1,0 @@
-../Core/Src/main.c:74:1:__io_putchar	1
-../Core/Src/main.c:88:5:main	2
-../Core/Src/main.c:184:6:SystemClock_Config	3
-../Core/Src/main.c:227:6:HAL_UARTEx_RxEventCallback	2
-../Core/Src/main.c:280:6:Error_Handler	1

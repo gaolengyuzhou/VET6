@@ -1,3 +1,0 @@
-../485/RS485.c:12:6:Serial_SendByte	1
-../485/RS485.c:17:6:Serial_SendArray	2
-../485/RS485.c:26:6:RS485_SendPacket	1
