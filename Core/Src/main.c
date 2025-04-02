@@ -18,19 +18,24 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "delay.h"
-#include "usmart.h"
 #include "lcd_spi_154.h"
+#include "gps982.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+double lat, lon;
+int lat_degrees, lat_minutes;
+double lat_seconds;
+int lon_degrees, lon_minutes;
+double lon_seconds;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -84,23 +89,47 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-    delay_init(168);                        /* 锟斤拷时锟斤拷始锟斤拷 */
-    usart_init(115200);                     /* 锟斤拷锟节筹拷始锟斤拷为115200 */
-    usmart_dev.init(84);                    /* USMART锟斤拷始锟斤拷 */
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 	SPI_LCD_Init();
+	delay_init(168);
+	HAL_UART_Receive_IT(&huart1, (uint8_t *)gUart1RcecBuf, 1);
+	// 初始化接收数据帧结构体
+  memset(&receDataFrame, 0, sizeof(ReceDataFrame));
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {		HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
-	  delay_ms(1000);
+  {
+		// 如果数据接收成功
+    if (receDataFrame.isGetData)
+    {// 判断是否有效
+			If_valid();
+		}
+		if (receDataFrame.isValidData)
+    {
+			extract_lat_lon(receDataFrame.Frame_Buffer, &lat, &lon);
+			convert_to_dms(lat, &lat_degrees, &lat_minutes, &lat_seconds);
+			convert_to_dms(lon, &lon_degrees, &lon_minutes, &lon_seconds);
+
+			char lat_str[50];
+			char lon_str[50];
+			sprintf(lat_str, "%d^%d'%f\"", lat_degrees, lat_minutes, lat_seconds);
+			sprintf(lon_str, "%d^%d'%f\"", lon_degrees, lon_minutes, lon_seconds);
+
+			LCD_DisplayString(1, 5, "lat:");LCD_DisplayString(1, 35, lat_str);
+			LCD_DisplayString(1, 65, "lon:");LCD_DisplayString(1, 95, lon_str);
+
+			receDataFrame.isValidData = 0;
+		}
+		
+//		delay_ms(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -155,6 +184,7 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
 
 /* USER CODE END 4 */
 
