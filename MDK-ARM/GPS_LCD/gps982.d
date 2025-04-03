@@ -38,3 +38,4 @@ gps_lcd\gps982.o: ../Core/Inc/main.h
 gps_lcd\gps982.o: ../Core/Inc/usart.h
 gps_lcd\gps982.o: ./LCD/lcd_fonts.h
 gps_lcd\gps982.o: ./LCD/lcd_image.h
+gps_lcd\gps982.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

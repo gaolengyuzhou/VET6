@@ -104,7 +104,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6713B2C4)
 I (../Core/Inc/usart.h)(0x67EC01A0)
 I (LCD\lcd_fonts.h)(0x625F80A6)
 I (LCD\lcd_image.h)(0x61B41D20)
-F (../Core/Src/main.c)(0x67ECED24)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./LCD -I ./SYSTEM -I .\GPS-I.\RTE\_GPS_LCD-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o gps_lcd\main.o --omf_browse gps_lcd\main.crf --depend gps_lcd\main.d)
+F (../Core/Src/main.c)(0x67EE26F7)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./LCD -I ./SYSTEM -I .\GPS-I.\RTE\_GPS_LCD-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o gps_lcd\main.o --omf_browse gps_lcd\main.crf --depend gps_lcd\main.d)
 I (../Core/Inc/main.h)(0x67EA5730)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6713B2C3)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x67EA5B58)
@@ -142,7 +142,7 @@ I (./SYSTEM/sys.h)(0x675F8B06)
 I (./LCD/lcd_spi_154.h)(0x67EA5906)
 I (./LCD/lcd_fonts.h)(0x625F80A6)
 I (./LCD/lcd_image.h)(0x61B41D20)
-I (.\GPS\gps982.h)(0x67ECEAE5)
+I (.\GPS\gps982.h)(0x67EE0D88)
 I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x588B8344)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588B8344)
 I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
@@ -754,7 +754,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6713B2C4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6713B2C4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6713B2C4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6713B2C4)
-F (.\GPS\gps982.c)(0x67ECED50)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./LCD -I ./SYSTEM -I .\GPS-I.\RTE\_GPS_LCD-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o gps_lcd\gps982.o --omf_browse gps_lcd\gps982.crf --depend gps_lcd\gps982.d)
+F (.\GPS\gps982.c)(0x67EE2517)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ./LCD -I ./SYSTEM -I .\GPS-I.\RTE\_GPS_LCD-ID:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o gps_lcd\gps982.o --omf_browse gps_lcd\gps982.crf --depend gps_lcd\gps982.d)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6713B2C3)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x67EA5B58)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6713B2C4)
@@ -784,7 +784,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6713B2C4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6713B2C4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6713B2C4)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6713B2C4)
-I (GPS\gps982.h)(0x67ECEAE5)
+I (GPS\gps982.h)(0x67EE0D88)
 I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x588B8344)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588B8344)
 I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
@@ -793,4 +793,5 @@ I (../Core/Inc/main.h)(0x67EA5730)
 I (../Core/Inc/usart.h)(0x67EC01A0)
 I (./LCD/lcd_fonts.h)(0x625F80A6)
 I (./LCD/lcd_image.h)(0x61B41D20)
-F (.\GPS\gps982.h)(0x67ECEAE5)()
+I (D:\Keil_v5\ARM\ARMCC\include\math.h)(0x588B8344)
+F (.\GPS\gps982.h)(0x67EE0D88)()

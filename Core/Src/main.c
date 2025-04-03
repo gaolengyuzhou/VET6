@@ -115,17 +115,27 @@ int main(void)
 		if (receDataFrame.isValidData)
     {
 			extract_lat_lon(receDataFrame.Frame_Buffer, &lat, &lon);
-			convert_to_dms(lat, &lat_degrees, &lat_minutes, &lat_seconds);
-			convert_to_dms(lon, &lon_degrees, &lon_minutes, &lon_seconds);
+			dm_to_dms(lat, &lat_degrees, &lat_minutes, &lat_seconds);
+			dm_to_dms(lon, &lon_degrees, &lon_minutes, &lon_seconds);
 
 			char lat_str[50];
 			char lon_str[50];
 			sprintf(lat_str, "%d^%d'%f\"", lat_degrees, lat_minutes, lat_seconds);
 			sprintf(lon_str, "%d^%d'%f\"", lon_degrees, lon_minutes, lon_seconds);
 
+			LCD_Clear();
+			LCD_DisplayString(1,185,"Data is usefull!");
 			LCD_DisplayString(1, 5, "lat:");LCD_DisplayString(1, 35, lat_str);
-			LCD_DisplayString(1, 65, "lon:");LCD_DisplayString(1, 95, lon_str);
+			LCD_DisplayString(1, 95, "lon:");LCD_DisplayString(1, 125, lon_str);
 
+			// 将度分秒格式转换为度分格式
+//			double current_lat_dm = lat//dms_to_dm(lat_degrees, lat_minutes, lat_seconds);
+//			double current_lon_dm = lon//dms_to_dm(lon_degrees, lon_minutes, lon_seconds);
+			double target_lat = 3906.34409800;
+			double target_lon = 11709.91847600;
+
+			calculate_distance_difference(lat, lon, target_lat, target_lon);
+			
 			receDataFrame.isValidData = 0;
 		}
 		

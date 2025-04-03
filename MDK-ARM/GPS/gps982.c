@@ -4,6 +4,9 @@
 #include "lcd_spi_154.h"
 #include "usart.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 ReceDataFrame receDataFrame;
 
 uint8_t gUart1RcecBuf[UART1RX_MAX_LENGTH];
@@ -15,7 +18,7 @@ void If_valid(void)   // 判断是否有效
     uint8_t tempVar = 0;   // 临时循环变量
 
 		receDataFrame.isGetData = 0;   // 清除接收成功标志位
-
+		
 		// for循环解析接收帧
 		for (tempVar = 0; tempVar < 7; tempVar++)
 		{
@@ -25,7 +28,7 @@ void If_valid(void)   // 判断是否有效
 						// 寻找第一个逗号
 						if ((point = strstr(receDataFrame.Frame_Buffer, ",")) == NULL)
 						{
-								LCD_DisplayString(1,125,"Prase Errpr!");   // 解析错误
+								LCD_DisplayString(1,185,"Prase Errpr!");   // 解析错误
 						}
 				}
 				else
@@ -54,20 +57,19 @@ void If_valid(void)   // 判断是否有效
 								// 数据有效
 								if (receDataFrame.UsefullFlag[0] == '1')
 								{
-										LCD_DisplayString(1,125,"Data is usefull!");
-										receDataFrame.isValidData = 1;   // 数据解析完成
+										receDataFrame.isValidData = 1;
 //												printf("Data is usefull!\r\n");
 								}
 								else if (receDataFrame.UsefullFlag[0] == '0')
 								{
-										LCD_DisplayString(1,125,"Data is invalid!");
+										LCD_DisplayString(1,185,"Data is invalid!");
 									  receDataFrame.isValidData = 0;
 //												printf("Data is invalid\r\n!");
 								}
 						}
 						else
 						{
-								LCD_DisplayString(1,125,"Prase Errpr!");    // 解析错误
+								LCD_DisplayString(1,185,"Prase Errpr!");    // 解析错误
 						}
 				}
 		}
@@ -150,9 +152,53 @@ void extract_lat_lon(const char *sentence, double *lat, double *lon) {
     }
 }
 // 将度分格式转换为度分秒格式
-void convert_to_dms(double coord, int *degrees, int *minutes, double *seconds) {
+void dm_to_dms(double coord, int *degrees, int *minutes, double *seconds) {
     *degrees = (int)coord / 100;
     double fractional_part = coord - (*degrees * 100);
     *minutes = (int)fractional_part;
     *seconds = (fractional_part - *minutes) * 60;
+}
+// 将度分格式转换为度格式
+double dm_to_deg(double dm) {
+    int degrees = (int)(dm / 100);
+    double minutes = dm - degrees * 100;
+    return degrees + minutes / 60;
+}
+// 将度分秒格式转换为度分格式
+double dms_to_dm(int degrees, int minutes, double seconds) {
+    return degrees * 100 + minutes + seconds / 60;
+}
+// 计算当前经纬度与给定经纬度之间的差距
+void calculate_distance_difference(double current_lat_dm, double current_lon_dm, double target_lat, double target_lon) {
+    char lat_str[50];
+		char lon_str[50];
+	
+	  // 将当前经纬度转换为度格式
+    double current_lat_deg = dm_to_deg(current_lat_dm);
+    double current_lon_deg = dm_to_deg(current_lon_dm);
+	  double target_lat_deg = dm_to_deg(target_lat);
+    double target_lon_deg = dm_to_deg(target_lon);
+
+    // 计算纬度差和经度差
+    double lat_diff = current_lat_deg - target_lat_deg;
+    double lon_diff = current_lon_deg - target_lon_deg;
+
+    // 计算纬度差对应的距离（米）
+    double lat_diff_meters = lat_diff * LATITUDE_PER_DEGREE_METERS;
+
+    // 计算当前纬度的余弦值
+    double current_lat_rad = current_lat_deg * M_PI / 180;
+    double longitude_per_degree_meters = LATITUDE_PER_DEGREE_METERS * cos(current_lat_rad);
+    // 计算经度差对应的距离（米）
+    double lon_diff_meters = lon_diff * longitude_per_degree_meters;
+
+//    printf("当前经纬度: %.6f, %.6f\n", current_lat_deg, current_lon_deg);
+//    printf("目标经纬度: %.6f, %.6f\n", target_lat, target_lon);
+//    printf("纬度差: %.2f 米\n", lat_diff_meters);
+//    printf("经度差: %.2f 米\n", lon_diff_meters);
+		sprintf(lat_str, "%.6fm", lat_diff_meters);
+		sprintf(lon_str, "%.6fm", lon_diff_meters);
+
+		LCD_DisplayString(1, 65, lat_str);
+		LCD_DisplayString(1, 155, lon_str);
 }
